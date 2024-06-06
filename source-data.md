@@ -2,7 +2,7 @@
 
 So just by googling open source football data quite a few come up including statsbombpy, football.db, football-data.org and API-football. I think the main this i want to seee is how easy it is to filter down to a single competition(league + season).
 
-## Statsbombpy
+## [Statsbombpy](https://github.com/statsbomb/statsbombpy)
 So this ended up being quite simple. Firsly, this is a python package that can be stored and then it seems like you use built in fucntions to query the API. You can be pay statsbomb to access a large amount of data but without authentication you still have access to their open data source. 
 
 To install you simple run the following command
@@ -71,5 +71,12 @@ print(bundesligas_df)
 
 So although we can filter down a single competition (league + season) with a function call and some simple dataframe stuffs it appears the availability of data isn't phenomenal.
 
-## API -Football
+## [API-Football](https://www.api-football.com/)
 
+## Honourable Mentions
+
+### [football.db](https://openfootball.github.io/)
+Um looked cool buuuuut I didn't understand the intro and looed liie i needed javascript/djngo...yeah nope
+
+### [football-data.org](https://www.football-data.org/)
+Didn't actually give this ne a try as I'd already worked on API-Football they looked quite similar - might come back and look later.
