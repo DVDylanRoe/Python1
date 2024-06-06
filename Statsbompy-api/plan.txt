@@ -1,0 +1,24 @@
+[] competitions
+want to get all competitions that qualify as top 5 leagues in the world
+so we're using...
+italian irst divison
+english first divison
+german first divison
+french first divisonq
+and spanish first divison
+
+ooo actually women's top flight would be fun
+
+then we want all teams in those competitions this season
+and all players within those teams
+then we wants all games in those competitions this season
+and then all events in those games
+
+only top flight I could get was bundesliga so will just run with that for now
+
+
+[] teams
+[] players
+[] games
+[] events
+
