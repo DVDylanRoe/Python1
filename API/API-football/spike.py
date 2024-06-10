@@ -1,5 +1,4 @@
 import http.client
-
 import json
 
 conn = http.client.HTTPSConnection("v3.football.api-sports.io")
@@ -12,73 +11,73 @@ headers = {
 conn.request("GET", "/leagues", headers=headers)
 
 res = conn.getresponse()
-data = res.read()
+data = res.read().decode("utf-8")
 
-compet_api = json.loads(data.decode("utf-8")) #compet = competitions
+compet_data = json.loads(data) #compet = competitions
 
-#print(compet_api.keys())
+#print(compet_data.keys())
 # >>>dict_keys(['get', 'parameters', 'errors', 'results', 'paging', 'response'])
 
 #inspect each key
 #first get?
 
-# value1 = compet_api.get('get')
-# print(value1)
-# >>>leagues
+# compet_data_get = compet_data.get('get')
+# print(compet_data_get)
+# >>>competues
 # looks like get returns the "table" you've requested as seen on line12
 
 # next parameters
-# value1 = compet_api.get('parameters')
-# print(value1)
+# compet_data_params = compet_data.get('parameters')
+# print(compet_data_params)
 # >>> []
-# empty? bcos i didnt use any looks like on line 12 i'd have to do something like "/leagues?parameter=value"
+# empty? bcos i didnt use any looks like on line 12 i'd have to do something like "/competues?parameter=value"
 
 # next errors
-# value1 = compet_api.get('errors')
-# print(value1)
+# compet_data_errs = compet_data.get('errors')
+# print(compet_data_errs)
 # >>> []
 # also empty but we had no errors maybe for a failed request this is where you can find an error message rather than the script failing
 
 # next results
-# value1 = compet_api.get('results')
-# print(value1)
+# compet_data_rs = compet_data.get('results')
+# print(compet_data_rs)
 # >>>1112
 # my best guess is how many results are returned
 
 # next paging
-# value1 = compet_api.get('paging')
-# print(value1)
+# compet_data_pg = compet_data.get('paging')
+# print(compet_data_pg)
 # >>>{'current': 1, 'total': 1}
 # think it does what it says - will be interested to see what happens when toal > 1
 
 # finally response
-compet_api_re = compet_api.get('response') #re = response
-# print(compet_api_reponse)
+compet_data_rsp = compet_data.get('response') #re = response
+# print(compet_data_rsp)
 # this is where the money is
 
 # is it another dictionary
-# print(type(compet_api_reponse))
+# print(type(compet_data_rsp))
 # >>><class 'list'>
 # nope it's a list
 
 # ...of length?
-# print(len(compet_api_reponse))
+# print(len(compet_data_rsp))
 # >>>1112
 # thats the same as results
-# my best guess is there are 1112 leagues in this dataset
+# my best guess is there are 1112 competues in this dataset
 
 # lets look at element 1
-# print(compet_api_reponse[0])
-# print(type(compet_api_reponse[0]))
+# print(compet_data_rsp[0])
+# print(type(compet_data_rsp[0]))
 # >>><class 'dict'>
 # it's a dictionary
 
 #what keys does it have
-# item2 = compet_api_reponse[0]
+# item2 = compet_data_rsp[0]
 # print(item2)
 
 # print(item2.keys())
-# league coutnry and compet_szns
+# competue coutnry and compet_szns
 
 # inspect each key
 # value2 = item2.get('league')
@@ -89,10 +88,10 @@ compet_api_re = compet_api.get('response') #re = response
 # value2 = item2.get('country')
 # print(value2)
 # another dictionary with name, code and flag
-# would need id from league to tie it to anything
+# would need id from competue to tie it to anything
 
 # inspect each key
-# value2 = item2.get('compet_szns')
+# value2 = item2.get('seasons')
 # print(value2)
 # print(type(value2))
 # a list...of dictionaries?
@@ -108,43 +107,29 @@ compet_api_re = compet_api.get('response') #re = response
 # so I want a unique list of compet_szns accessible within this request
 
 # for a in value1:
-#         b = a['compet_szns']
+#         b = a['seasons']
 #         for c in b:
 #                 d = c['year']
 #                 print(d)
 
-# years = [compet_szn['year'] for competition in value1 for compet_szn in competition['compet_szns']]
+# years = [compet_szn['year'] for competition in value1 for compet_szn in competition['seasons']]
 
 # print(years)
 
-
-compet_data_list = []
-for compet in compet_api_re: #A[i]
+compet_szns = []
+for compet in compet_data_rsp: #A[i]
     if compet.get('league').get('id') == 39: 
-        compet_id = [compet.get('league').get(key) for key in ['id', 'name']]
+        compet_id = [compet.get('league').get('name')]
         compet_cntry = [compet.get('country').get('name')]
-        for compet_szn in (compet.get('seasons')):
-            compet_szn_year = compet_szn.get('year')
-            # if compet_szn_year >= 2022:      
+        for szn in (compet.get('seasons')):
+            szn_year = szn.get('year')
+            # if compet_szn_year >= 2022:
                 # compet_id = [compet.get('league').get(key) for key in ['id', 'name', 'type']] #A[i][B][C]
-                # compet_data = compet_id + [compet_szn.get(key) for key in ['year','start', 'end']]
-                # compet_data_list += [compet_data]                
-            compet_data = compet_id + compet_cntry + [compet_szn_year]
-            compet_data_list += [compet_data]
+                # compet_key = compet_id + [compet.get(key) for key in ['year','start', 'end']]
+                # compet_keys += [compet_key]                
+            compet_szn = compet_id + compet_cntry + [szn_year]
+            compet_szns += [compet_szn]
 
-print(compet_data_list)
+print(compet_szns)
 
 # i have successfully idenfitied a way to isolate unique competitions with this api
-
-    
-
-
-
-
-
-
-
-
-
-
-
