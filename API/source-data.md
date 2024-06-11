@@ -160,7 +160,7 @@ print(leag_data_rsp)
 ```
 and this returns a rather large list of dictionaries where each dictionary represents a competition.
 
-![comp_data_rsp breakdown](API-football\compet_data_rsp.png)
+![comp_data_rsp breakdown](compet_data_rsp.png)
 
 This is a rough breakdown of how the list comp_data_rsp is stored and how it needs to be accessed. In this data set league name doesn't seem to be unique as there are 20+ competitions called "Premier League"(the English Premier League has league id 39) so the unique combination for a competition appears to be league name and country name. Finally to get our desired combination of competition season all we are missing is the seasons year.
 
